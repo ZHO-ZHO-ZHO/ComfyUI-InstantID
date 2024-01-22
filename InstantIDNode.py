@@ -242,7 +242,7 @@ class GenerationNode_Zho:
 
 NODE_CLASS_MAPPINGS = {
     "InsightFaceLoader": InsightFaceLoader_Node_Zho,
-    "ControlNetLoader": ControlNetLoader_Node_Zho,
+    "ControlNetLoader_node": ControlNetLoader_Node_Zho,
     "BaseModelLoader_fromhub": BaseModelLoader_fromhub_Node_Zho,
     "Ipadapter_instantidLoader": Ipadapter_instantidLoader_Node_Zho,
     "GenerationNode": GenerationNode_Zho
@@ -250,7 +250,7 @@ NODE_CLASS_MAPPINGS = {
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "InsightFaceLoader": "📷InsightFace Loader",
-    "ControlNetLoader": "📷ControlNet Loader",
+    "ControlNetLoader_node": "📷ControlNet Loader",
     "BaseModelLoader_fromhub": "📷Base Model Loader fromhub",
     "Ipadapter_instantidLoader": "📷Ipadapter_instantid Loader",
     "GenerationNode": "📷InstantID Generation"
