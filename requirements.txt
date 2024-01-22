@@ -3,4 +3,4 @@ transformers
 accelerate 
 insightface
 diffusers
-onnxruntime
+onnxruntime-gpu
