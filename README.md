@@ -20,6 +20,10 @@ Unofficial implementation of [InstantID](https://github.com/InstantID/InstantID)
 
 
 
+https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-4044-aea3-8efa67047362
+
+
+
 ## 节点说明 | Features
 
 - 基础模型加载 | base model loader
