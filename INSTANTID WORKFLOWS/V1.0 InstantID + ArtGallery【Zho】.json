@@ -1,0 +1,615 @@
+{
+  "last_node_id": 21,
+  "last_link_id": 41,
+  "nodes": [
+    {
+      "id": 6,
+      "type": "LoadImage",
+      "pos": [
+        100,
+        1770
+      ],
+      "size": {
+        "0": 380,
+        "1": 500
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            31
+          ],
+          "shape": 3
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "download.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "IDBaseModelLoader_fromhub",
+      "pos": [
+        100,
+        1420
+      ],
+      "size": {
+        "0": 290,
+        "1": 60
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "controlnet",
+          "type": "MODEL",
+          "link": 33
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "links": [
+            34
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDBaseModelLoader_fromhub"
+      },
+      "widgets_values": [
+        "wangqixun/YamerMIX_v8"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "InsightFaceLoader",
+      "pos": [
+        100,
+        1660
+      ],
+      "size": {
+        "0": 290,
+        "1": 60
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "INSIGHTFACE",
+          "type": "INSIGHTFACE",
+          "links": [
+            29
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InsightFaceLoader"
+      },
+      "widgets_values": [
+        "CUDA"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "Ipadapter_instantidLoader",
+      "pos": [
+        98,
+        1526
+      ],
+      "size": {
+        "0": 290,
+        "1": 90
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "link": 34
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            30
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Ipadapter_instantidLoader"
+      },
+      "widgets_values": [
+        "/content/ComfyUI/models/checkpoints",
+        "ip-adapter.bin"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "IDControlNetLoader",
+      "pos": [
+        100,
+        1320
+      ],
+      "size": {
+        "0": 290,
+        "1": 60
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "controlnet",
+          "type": "MODEL",
+          "links": [
+            33
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDControlNetLoader"
+      },
+      "widgets_values": [
+        "/content/ComfyUI/models/controlnet"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "PreviewImage",
+      "pos": [
+        500,
+        1770
+      ],
+      "size": {
+        "0": 470,
+        "1": 500
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 32
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 18,
+      "type": "ArtistsImage_Zho",
+      "pos": [
+        410,
+        1320
+      ],
+      "size": [
+        300,
+        400
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "links": [
+            40
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ArtistsImage_Zho"
+      },
+      "widgets_values": [
+        "Alphonse Osbert .png",
+        1.2
+      ]
+    },
+    {
+      "id": 20,
+      "type": "MovementsImage_Zho",
+      "pos": [
+        730,
+        1320
+      ],
+      "size": [
+        300,
+        400
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "links": [
+            39
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MovementsImage_Zho"
+      },
+      "widgets_values": [
+        "Gutai Group.png",
+        0.6
+      ]
+    },
+    {
+      "id": 9,
+      "type": "ID_Prompt_Styler",
+      "pos": [
+        1050,
+        1570
+      ],
+      "size": [
+        230,
+        150
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 36,
+          "widget": {
+            "name": "prompt"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive_prompt",
+          "type": "STRING",
+          "links": [
+            28
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative_prompt",
+          "type": "STRING",
+          "links": [
+            27
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ID_Prompt_Styler"
+      },
+      "widgets_values": [
+        " a woman, retro futurism, retro game",
+        "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured (lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch,deformed, mutated, cross-eyed, ugly, disfigured",
+        "Neon"
+      ]
+    },
+    {
+      "id": 19,
+      "type": "ConcatText_Zho",
+      "pos": [
+        1050,
+        1420
+      ],
+      "size": [
+        230,
+        100
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_1",
+          "type": "STRING",
+          "link": 41,
+          "widget": {
+            "name": "text_1"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            36
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConcatText_Zho"
+      },
+      "widgets_values": [
+        "",
+        " a woman, retro futurism, retro game"
+      ]
+    },
+    {
+      "id": 21,
+      "type": "ConcatText_Zho",
+      "pos": [
+        1050,
+        1320
+      ],
+      "size": [
+        230,
+        50
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_1",
+          "type": "STRING",
+          "link": 40,
+          "widget": {
+            "name": "text_1"
+          }
+        },
+        {
+          "name": "text_2",
+          "type": "STRING",
+          "link": 39,
+          "widget": {
+            "name": "text_2"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            41
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConcatText_Zho"
+      },
+      "widgets_values": [
+        "",
+        " a woman, retro futurism, retro game"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "IDGenerationNode",
+      "pos": [
+        990,
+        1770
+      ],
+      "size": [
+        290,
+        500
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "face_image",
+          "type": "IMAGE",
+          "link": 31,
+          "slot_index": 0
+        },
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "link": 30
+        },
+        {
+          "name": "insightface",
+          "type": "INSIGHTFACE",
+          "link": 29
+        },
+        {
+          "name": "positive",
+          "type": "STRING",
+          "link": 28,
+          "widget": {
+            "name": "positive"
+          }
+        },
+        {
+          "name": "negative",
+          "type": "STRING",
+          "link": 27,
+          "widget": {
+            "name": "negative"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            32
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDGenerationNode"
+      },
+      "widgets_values": [
+        "",
+        "",
+        0.8,
+        0.8,
+        50,
+        5,
+        1024,
+        1024,
+        780847710635035,
+        "randomize"
+      ]
+    }
+  ],
+  "links": [
+    [
+      27,
+      9,
+      1,
+      15,
+      4,
+      "STRING"
+    ],
+    [
+      28,
+      9,
+      0,
+      15,
+      3,
+      "STRING"
+    ],
+    [
+      29,
+      11,
+      0,
+      15,
+      2,
+      "INSIGHTFACE"
+    ],
+    [
+      30,
+      4,
+      0,
+      15,
+      1,
+      "MODEL"
+    ],
+    [
+      31,
+      6,
+      0,
+      15,
+      0,
+      "IMAGE"
+    ],
+    [
+      32,
+      15,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      33,
+      2,
+      0,
+      16,
+      0,
+      "MODEL"
+    ],
+    [
+      34,
+      16,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      36,
+      19,
+      0,
+      9,
+      0,
+      "STRING"
+    ],
+    [
+      39,
+      20,
+      0,
+      21,
+      1,
+      "STRING"
+    ],
+    [
+      40,
+      18,
+      0,
+      21,
+      0,
+      "STRING"
+    ],
+    [
+      41,
+      21,
+      0,
+      19,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
