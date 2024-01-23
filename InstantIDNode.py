@@ -1,7 +1,7 @@
 import diffusers
 from diffusers.utils import load_image
 from diffusers.models import ControlNetModel
-from .isid_style_template import styles
+from .style_template import styles
 
 import os
 import cv2
