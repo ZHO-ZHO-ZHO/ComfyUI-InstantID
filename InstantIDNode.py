@@ -230,7 +230,6 @@ class IDGenerationNode_Zho:
                 "insightface": ("INSIGHTFACE",),
                 "positive": ("STRING", {"multiline": True, "forceInput": True}),
                 "negative": ("STRING", {"multiline": True, "forceInput": True}),
-                "batch_size": ("INT", {"default": 1, "min": 1, "max": 4, "display": "slider"}),
                 "ip_adapter_scale": ("FLOAT", {"default": 0.8, "min": 0, "max": 1.0, "display": "slider"}),
                 "controlnet_conditioning_scale": ("FLOAT", {"default": 0.8, "min": 0, "max": 1.0, "display": "slider"}),
                 "steps": ("INT", {"default": 50, "min": 1, "max": 100, "step": 1, "display": "slider"}),
@@ -245,7 +244,7 @@ class IDGenerationNode_Zho:
     FUNCTION = "generate_image"
     CATEGORY = "📷InstantID"
                        
-    def generate_image(self, insightface, positive, negative, face_image, pipe, batch_size, ip_adapter_scale, controlnet_conditioning_scale, steps, guidance_scale, width, height, seed):
+    def generate_image(self, insightface, positive, negative, face_image, pipe, ip_adapter_scale, controlnet_conditioning_scale, steps, guidance_scale, width, height, seed):
 
         face_image = resize_img(face_image)
         
@@ -265,7 +264,6 @@ class IDGenerationNode_Zho:
         output = pipe(
             prompt=positive,
             negative_prompt=negative,
-            num_images_per_prompt=batch_size,
             image_embeds=face_emb,
             image=face_kps,
             controlnet_conditioning_scale=controlnet_conditioning_scale,
