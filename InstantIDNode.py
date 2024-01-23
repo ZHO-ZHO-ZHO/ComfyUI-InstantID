@@ -1,6 +1,7 @@
 import diffusers
 from diffusers.utils import load_image
 from diffusers.models import ControlNetModel
+from .isid_style_template import styles
 
 import os
 import cv2
@@ -14,8 +15,15 @@ from insightface.app import FaceAnalysis
 from .pipeline_stable_diffusion_xl_instantid import StableDiffusionXLInstantIDPipeline, draw_kps
 
 
-
+current_directory = os.path.dirname(os.path.abspath(__file__))
 device = "cuda" if torch.cuda.is_available() else "cpu"
+STYLE_NAMES = list(styles.keys())
+DEFAULT_STYLE_NAME = "Neon"
+
+
+def apply_style(style_name: str, positive: str, negative: str = "") -> tuple[str, str]:
+        p, n = styles.get(style_name, styles[DEFAULT_STYLE_NAME])
+        return p.replace("{prompt}", positive), n + ' ' + negative
 
 
 def resize_img(input_image, max_side=1280, min_side=1024, size=None, 
@@ -50,8 +58,6 @@ class InsightFaceLoader_Node_Zho:
     def INPUT_TYPES(s):
         return {
             "required": {
-                "insight_face_path": ("STRING", {"default": "enter path"}),
-                "filename": ("STRING", {"default": "buffalo_l"}),
                 "provider": (["CUDA", "CPU"], ),
             },
         }
@@ -60,12 +66,102 @@ class InsightFaceLoader_Node_Zho:
     FUNCTION = "load_insight_face"
     CATEGORY = "📷InstantID"
 
-    def load_insight_face(self, insight_face_path, filename, provider):
-        insight_face = os.path.join(insight_face_path, filename)
-        model = FaceAnalysis(name="buffalo_l", root=insight_face, providers=[provider + 'ExecutionProvider',])
+    def load_insight_face(self, provider):
+        model = FaceAnalysis(name="antelopev2", root=current_directory, providers=[provider + 'ExecutionProvider',])
         model.prepare(ctx_id=0, det_size=(640, 640))
 
         return (model,)
+
+
+class IDControlNetLoaderNode_Zho:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "controlnet_path": ("STRING", {"default": "enter your path"}),
+            }
+        }
+
+    RETURN_TYPES = ("MODEL",)
+    RETURN_NAMES = ("controlnet",)
+    FUNCTION = "load_idcontrolnet"
+    CATEGORY = "📷InstantID"
+    
+    def load_idcontrolnet(self, controlnet_path):
+
+        controlnet = ControlNetModel.from_pretrained(controlnet_path, torch_dtype=torch.float16)
+
+        return [controlnet]
+
+
+class IDBaseModelLoader_fromhub_Node_Zho:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "base_model_path": ("STRING", {"default": "wangqixun/YamerMIX_v8"}),
+                "controlnet": ("MODEL",)
+            }
+        }
+
+    RETURN_TYPES = ("MODEL",)
+    RETURN_NAMES = ("pipe",)
+    FUNCTION = "load_model"
+    CATEGORY = "📷InstantID"
+  
+    def load_model(self, base_model_path, controlnet):
+        # Code to load the base model
+        pipe = StableDiffusionXLInstantIDPipeline.from_pretrained(
+            base_model_path,
+            controlnet=controlnet,
+            torch_dtype=torch.float16,
+            local_dir="./checkpoints"
+        ).to(device)
+        return [pipe]
+
+
+class IDBaseModelLoader_local_Node_Zho:
+    def __init__(self):
+        pass
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "ckpt_name": (folder_paths.get_filename_list("checkpoints"), ),
+                "controlnet": ("MODEL",)
+            }
+        }
+
+    RETURN_TYPES = ("MODEL",)
+    RETURN_NAMES = ("pipe",)
+    FUNCTION = "load_model"
+    CATEGORY = "📷InstantID"
+  
+    def load_model(self, ckpt_name, controlnet):
+        # Code to load the base model
+        if not ckpt_name:
+            raise ValueError("Please provide the ckpt_name parameter with the name of the checkpoint file.")
+
+        ckpt_path = folder_paths.get_full_path("checkpoints", ckpt_name)
+            
+        if not os.path.exists(ckpt_path):
+            raise FileNotFoundError(f"Checkpoint file {ckpt_path} not found.")
+                
+        pipe = StableDiffusionXLInstantIDPipeline.from_single_file(
+            pretrained_model_link_or_path=ckpt_path,
+            controlnet=controlnet,
+            torch_dtype=torch.float16,
+            use_safetensors=True,
+            variant="fp16"
+        ).to(device)
+        return [pipe]
 
 
 class Ipadapter_instantidLoader_Node_Zho:
@@ -96,7 +192,7 @@ class Ipadapter_instantidLoader_Node_Zho:
         return [pipe]
 
 
-class ControlNetLoader_local_Node_Zho:
+class ID_Prompt_Style_Zho:
     def __init__(self):
         pass
 
@@ -104,52 +200,24 @@ class ControlNetLoader_local_Node_Zho:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "controlnet_path": ("STRING", {"default": "enter your path"}),
+                "prompt": ("STRING", {"default": "analog film photo of a woman. faded film, desaturated, 35mm photo, grainy, vignette, vintage, Kodachrome, Lomography, stained, highly detailed, found footage, masterpiece, best quality", "multiline": True}),
+                "negative_prompt": ("STRING", {"default": "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured (lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch,deformed, mutated, cross-eyed, ugly, disfigured", "multiline": True}),
+                "style_name": (STYLE_NAMES, {"default": DEFAULT_STYLE_NAME})
             }
         }
 
-    RETURN_TYPES = ("MODEL",)
-    RETURN_NAMES = ("controlnet",)
-    FUNCTION = "load_controlnet"
+    RETURN_TYPES = ('STRING','STRING',)
+    RETURN_NAMES = ('positive_prompt','negative_prompt',)
+    FUNCTION = "prompt_style"
     CATEGORY = "📷InstantID"
-    
-    def load_controlnet(self, controlnet_path):
 
-        controlnet = ControlNetModel.from_pretrained(controlnet_path, torch_dtype=torch.float16)
-
-        return [controlnet]
-
-
-class BaseModelLoader_fromhub_Node_Zho:
-    def __init__(self):
-        pass
-
-    @classmethod
-    def INPUT_TYPES(cls):
-        return {
-            "required": {
-                "base_model_path": ("STRING", {"default": "wangqixun/YamerMIX_v8"}),
-                "controlnet": ("MODEL",)
-            }
-        }
-
-    RETURN_TYPES = ("MODEL",)
-    RETURN_NAMES = ("pipe",)
-    FUNCTION = "load_model"
-    CATEGORY = "📷InstantID"
-  
-    def load_model(self, base_model_path, controlnet):
-        # Code to load the base model
-        pipe = StableDiffusionXLInstantIDPipeline.from_pretrained(
-            base_model_path,
-            controlnet=controlnet,
-            torch_dtype=torch.float16,
-            local_dir="./checkpoints"
-        ).to(device)
-        return [pipe]
+    def prompt_style(self, style_name, prompt, negative_prompt):
+        prompt, negative_prompt = apply_style(style_name, prompt, negative_prompt)
+        
+        return prompt, negative_prompt
 
 
-class GenerationNode_Zho:
+class IDGenerationNode_Zho:
     def __init__(self):
         pass
 
@@ -160,8 +228,8 @@ class GenerationNode_Zho:
                 "face_image": ("IMAGE",),
                 "pipe": ("MODEL",),
                 "insightface": ("INSIGHTFACE",),
-                "prompt": ("STRING", {"default": "film noir style, ink sketch|vector, male man, highly detailed, sharp focus, ultra sharpness, monochrome, high contrast, dramatic shadows, 1940s style, mysterious, cinematic", "multiline": True}),
-                "negative_prompt": ("STRING", {"default": "ugly, deformed, noisy, blurry, low contrast, realism, photorealistic, vibrant, colorful", "multiline": True}),
+                "positive": ("STRING", {"multiline": True, "forceInput": True}),
+                "negative": ("STRING", {"multiline": True, "forceInput": True}),
                 "batch_size": ("INT", {"default": 1, "min": 1, "max": 4, "display": "slider"}),
                 "ip_adapter_scale": ("FLOAT", {"default": 0.8, "min": 0, "max": 1.0, "display": "slider"}),
                 "controlnet_conditioning_scale": ("FLOAT", {"default": 0.8, "min": 0, "max": 1.0, "display": "slider"}),
@@ -177,7 +245,7 @@ class GenerationNode_Zho:
     FUNCTION = "generate_image"
     CATEGORY = "📷InstantID"
                        
-    def generate_image(self, insightface, prompt, negative_prompt, face_image, pipe, batch_size, ip_adapter_scale, controlnet_conditioning_scale, steps, guidance_scale, width, height, seed):
+    def generate_image(self, insightface, positive, negative, face_image, pipe, batch_size, ip_adapter_scale, controlnet_conditioning_scale, steps, guidance_scale, width, height, seed):
 
         face_image = resize_img(face_image)
         
@@ -195,8 +263,8 @@ class GenerationNode_Zho:
         pipe.set_ip_adapter_scale(ip_adapter_scale)
 
         output = pipe(
-            prompt=prompt,
-            negative_prompt=negative_prompt,
+            prompt=positive,
+            negative_prompt=negative,
             num_images_per_prompt=batch_size,
             image_embeds=face_emb,
             image=face_kps,
@@ -242,16 +310,20 @@ class GenerationNode_Zho:
 
 NODE_CLASS_MAPPINGS = {
     "InsightFaceLoader": InsightFaceLoader_Node_Zho,
-    "ControlNetLoader_local": ControlNetLoader_local_Node_Zho,
-    "BaseModelLoader_fromhub": BaseModelLoader_fromhub_Node_Zho,
+    "IDControlNetLoader": IDControlNetLoaderNode_Zho,
+    "IDBaseModelLoader_fromhub": IDBaseModelLoader_fromhub_Node_Zho,
+    "IDBaseModelLoader_local": IDBaseModelLoader_local_Node_Zho,
     "Ipadapter_instantidLoader": Ipadapter_instantidLoader_Node_Zho,
-    "GenerationNode": GenerationNode_Zho
+    "ID_Prompt_Styler": ID_Prompt_Style_Zho,
+    "IDGenerationNode": IDGenerationNode_Zho
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "InsightFaceLoader": "📷InsightFace Loader",
-    "ControlNetLoader_local": "📷ControlNet Loader local",
-    "BaseModelLoader_fromhub": "📷Base Model Loader fromhub",
+    "IDControlNetLoader": "📷ID ControlNet Loader",
+    "IDBaseModelLoader_fromhub": "📷ID Base Model Loader from hub 🤗",
+    "IDBaseModelLoader_local": "📷ID Base Model Loader locally",
     "Ipadapter_instantidLoader": "📷Ipadapter_instantid Loader",
-    "GenerationNode": "📷InstantID Generation"
+    "ID_Prompt_Styler": "📷ID Prompt_Styler",
+    "IDGenerationNode": "📷InstantID Generation"
 }
