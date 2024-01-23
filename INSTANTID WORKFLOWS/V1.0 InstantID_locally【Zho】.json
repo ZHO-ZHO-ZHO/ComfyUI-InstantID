@@ -1,0 +1,400 @@
+{
+  "last_node_id": 17,
+  "last_link_id": 36,
+  "nodes": [
+    {
+      "id": 6,
+      "type": "LoadImage",
+      "pos": [
+        100,
+        1770
+      ],
+      "size": {
+        "0": 380,
+        "1": 500
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            31
+          ],
+          "shape": 3
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "download.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "IDGenerationNode",
+      "pos": [
+        690,
+        1320
+      ],
+      "size": [
+        280,
+        400
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "face_image",
+          "type": "IMAGE",
+          "link": 31,
+          "slot_index": 0
+        },
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "link": 30
+        },
+        {
+          "name": "insightface",
+          "type": "INSIGHTFACE",
+          "link": 29
+        },
+        {
+          "name": "positive",
+          "type": "STRING",
+          "link": 28,
+          "widget": {
+            "name": "positive"
+          }
+        },
+        {
+          "name": "negative",
+          "type": "STRING",
+          "link": 27,
+          "widget": {
+            "name": "negative"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            32
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDGenerationNode"
+      },
+      "widgets_values": [
+        "",
+        "",
+        0.8,
+        0.8,
+        50,
+        5,
+        1024,
+        1024,
+        836332103938257,
+        "randomize"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "InsightFaceLoader",
+      "pos": [
+        100,
+        1660
+      ],
+      "size": [
+        290,
+        60
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "INSIGHTFACE",
+          "type": "INSIGHTFACE",
+          "links": [
+            29
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InsightFaceLoader"
+      },
+      "widgets_values": [
+        "CUDA"
+      ]
+    },
+    {
+      "id": 12,
+      "type": "PreviewImage",
+      "pos": [
+        500,
+        1770
+      ],
+      "size": {
+        "0": 470,
+        "1": 500
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 32
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 4,
+      "type": "Ipadapter_instantidLoader",
+      "pos": [
+        98,
+        1526
+      ],
+      "size": [
+        290,
+        90
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "link": 36
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            30
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Ipadapter_instantidLoader"
+      },
+      "widgets_values": [
+        "/content/ComfyUI/models/checkpoints",
+        "ip-adapter.bin"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "ID_Prompt_Styler",
+      "pos": [
+        410,
+        1320
+      ],
+      "size": [
+        260,
+        400
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "positive_prompt",
+          "type": "STRING",
+          "links": [
+            28
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative_prompt",
+          "type": "STRING",
+          "links": [
+            27
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ID_Prompt_Styler"
+      },
+      "widgets_values": [
+        " a woman, retro futurism, retro game",
+        "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured (lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch,deformed, mutated, cross-eyed, ugly, disfigured",
+        "Vibrant Color"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "IDControlNetLoader",
+      "pos": [
+        100,
+        1320
+      ],
+      "size": [
+        290,
+        60
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "controlnet",
+          "type": "MODEL",
+          "links": [
+            35
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDControlNetLoader"
+      },
+      "widgets_values": [
+        "/content/ComfyUI/models/controlnet"
+      ]
+    },
+    {
+      "id": 17,
+      "type": "IDBaseModelLoader_local",
+      "pos": [
+        100,
+        1420
+      ],
+      "size": [
+        290,
+        60
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "controlnet",
+          "type": "MODEL",
+          "link": 35
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "links": [
+            36
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDBaseModelLoader_local"
+      },
+      "widgets_values": [
+        "sd_xl_base_1.0.safetensors"
+      ]
+    }
+  ],
+  "links": [
+    [
+      27,
+      9,
+      1,
+      15,
+      4,
+      "STRING"
+    ],
+    [
+      28,
+      9,
+      0,
+      15,
+      3,
+      "STRING"
+    ],
+    [
+      29,
+      11,
+      0,
+      15,
+      2,
+      "INSIGHTFACE"
+    ],
+    [
+      30,
+      4,
+      0,
+      15,
+      1,
+      "MODEL"
+    ],
+    [
+      31,
+      6,
+      0,
+      15,
+      0,
+      "IMAGE"
+    ],
+    [
+      32,
+      15,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      35,
+      2,
+      0,
+      17,
+      0,
+      "MODEL"
+    ],
+    [
+      36,
+      17,
+      0,
+      4,
+      0,
+      "MODEL"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
