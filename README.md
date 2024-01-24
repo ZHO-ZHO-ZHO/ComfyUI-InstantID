@@ -13,7 +13,7 @@ Unofficial implementation of [InstantID](https://github.com/InstantID/InstantID)
 
 - 来自对[InstantID](https://github.com/InstantID/InstantID)的非官方实现
   
-- 版本：V1.0 同时支持本地、huggingface hub模型，支持通用styler（也与 PhotoMaker Styler 通用）
+- 版本：V1.0 同时支持本地、Hugging Face hub模型，支持通用styler（也与 PhotoMaker Styler 通用）
 
 
 ## 视频演示
@@ -27,7 +27,7 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 ## 节点说明 | Features
 
 - 基础模型加载 | base model loader
-    - 📷ID Base Model Loader from hub 🤗：支持从 huggingface hub 自动下载模型，输入模型名称（如：wangqixun/YamerMIX_v8）即可
+    - 📷ID Base Model Loader from hub 🤗：支持从 Hugging Face hub 自动下载模型，输入模型名称（如：wangqixun/YamerMIX_v8）即可
     - 📷ID Base Model Loader locally：支持加载本地模型（需 SDXL 系列模型）
 
 - InsightFace 模型加载 | 📷InsightFace Loader
@@ -111,7 +111,7 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
   ![Dingtalk_20240123175624](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/459bfede-59e8-4d8d-941c-a950c4827c49)
 
 
-- [V1.0 自动下载 huggingface hub](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/blob/main/INSTANTID%20WORKFLOWS/V1.0%20InstantID_fromhub%E3%80%90Zho%E3%80%91.json)
+- [V1.0 自动下载 Hugging Face hub](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/blob/main/INSTANTID%20WORKFLOWS/V1.0%20InstantID_fromhub%E3%80%90Zho%E3%80%91.json)
 
   ![Dingtalk_20240123174950](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/50133961-1752-4ec8-ac0b-068d998b8534)
 
@@ -128,7 +128,7 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 
 - 20240123
 
-  V1.0 上线：同时支持本地、huggingface hub托管模型，支持8种风格
+  V1.0 上线：同时支持本地、Hugging Face hub托管模型，支持8种风格
 
 - 20240122
 
