@@ -1,0 +1,665 @@
+{
+  "last_node_id": 13,
+  "last_link_id": 13,
+  "nodes": [
+    {
+      "id": 3,
+      "type": "IDBaseModelLoader_fromhub",
+      "pos": [
+        350,
+        530
+      ],
+      "size": {
+        "0": 310,
+        "1": 60
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "controlnet",
+          "type": "MODEL",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "links": [
+            2
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDBaseModelLoader_fromhub"
+      },
+      "widgets_values": [
+        "wangqixun/YamerMIX_v8"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "Ipadapter_instantidLoader",
+      "pos": [
+        350,
+        640
+      ],
+      "size": {
+        "0": 310,
+        "1": 82
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            8
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Ipadapter_instantidLoader"
+      },
+      "widgets_values": [
+        "/content/ComfyUI/models/checkpoints",
+        "ip-adapter.bin"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "InsightFaceLoader",
+      "pos": [
+        350,
+        770
+      ],
+      "size": [
+        310,
+        60
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "INSIGHTFACEMODEL",
+          "type": "INSIGHTFACEMODEL",
+          "links": [
+            7
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InsightFaceLoader"
+      },
+      "widgets_values": [
+        "CUDA"
+      ]
+    },
+    {
+      "id": 2,
+      "type": "IDControlNetLoader",
+      "pos": [
+        350,
+        420
+      ],
+      "size": {
+        "0": 310,
+        "1": 60
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "controlnet",
+          "type": "MODEL",
+          "links": [
+            1
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDControlNetLoader"
+      },
+      "widgets_values": [
+        "/content/ComfyUI/models/controlnet"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "ConcatText_Zho",
+      "pos": [
+        1340,
+        530
+      ],
+      "size": [
+        300,
+        96
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_1",
+          "type": "STRING",
+          "link": 12,
+          "widget": {
+            "name": "text_1"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            13
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConcatText_Zho"
+      },
+      "widgets_values": [
+        "",
+        "a woman, retro futurism, retro game"
+      ]
+    },
+    {
+      "id": 11,
+      "type": "MovementsImage_Zho",
+      "pos": [
+        1010,
+        420
+      ],
+      "size": [
+        310,
+        410
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "links": [
+            11
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MovementsImage_Zho"
+      },
+      "widgets_values": [
+        "Abstract Expressionism.png",
+        1.2
+      ]
+    },
+    {
+      "id": 12,
+      "type": "ConcatText_Zho",
+      "pos": [
+        1340,
+        420
+      ],
+      "size": [
+        300,
+        66.00003337860107
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "text_1",
+          "type": "STRING",
+          "link": 10,
+          "widget": {
+            "name": "text_1"
+          }
+        },
+        {
+          "name": "text_2",
+          "type": "STRING",
+          "link": 11,
+          "widget": {
+            "name": "text_2"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "links": [
+            12
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConcatText_Zho"
+      },
+      "widgets_values": [
+        "",
+        ""
+      ]
+    },
+    {
+      "id": 7,
+      "type": "LoadImage",
+      "pos": [
+        350,
+        880
+      ],
+      "size": {
+        "0": 310,
+        "1": 430
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5
+          ],
+          "shape": 3
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "download.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "ID_Prompt_Styler",
+      "pos": [
+        1340,
+        670
+      ],
+      "size": [
+        300,
+        160
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "prompt",
+          "type": "STRING",
+          "link": 13,
+          "widget": {
+            "name": "prompt"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive_prompt",
+          "type": "STRING",
+          "links": [
+            3
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative_prompt",
+          "type": "STRING",
+          "links": [
+            4
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ID_Prompt_Styler"
+      },
+      "widgets_values": [
+        "",
+        "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly",
+        "Neon"
+      ]
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [
+        350,
+        1360
+      ],
+      "size": [
+        310,
+        270
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            6
+          ],
+          "shape": 3
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "u=2585260240,4217738218&fm=253&fmt=auto&app=120&f=JPEG.webp",
+        "image"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "PreviewImage",
+      "pos": [
+        680,
+        880
+      ],
+      "size": [
+        1310,
+        750
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 6,
+      "type": "IDGenerationNode",
+      "pos": [
+        1660,
+        420
+      ],
+      "size": [
+        330,
+        410
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "face_image",
+          "type": "IMAGE",
+          "link": 5,
+          "slot_index": 0
+        },
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "link": 8
+        },
+        {
+          "name": "insightface",
+          "type": "INSIGHTFACEMODEL",
+          "link": 7
+        },
+        {
+          "name": "pose_image_optional",
+          "type": "IMAGE",
+          "link": 6,
+          "slot_index": 3
+        },
+        {
+          "name": "positive",
+          "type": "STRING",
+          "link": 3,
+          "widget": {
+            "name": "positive"
+          }
+        },
+        {
+          "name": "negative",
+          "type": "STRING",
+          "link": 4,
+          "widget": {
+            "name": "negative"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDGenerationNode"
+      },
+      "widgets_values": [
+        "",
+        "",
+        0.8,
+        0.8,
+        50,
+        5,
+        true,
+        1041987604602403,
+        "fixed"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "ArtistsImage_Zho",
+      "pos": [
+        680,
+        420
+      ],
+      "size": [
+        310,
+        410
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "name",
+          "type": "STRING",
+          "links": [
+            10
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ArtistsImage_Zho"
+      },
+      "widgets_values": [
+        "Atey Ghailan .png",
+        1.2
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      2,
+      0,
+      3,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      3,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      3,
+      5,
+      0,
+      6,
+      4,
+      "STRING"
+    ],
+    [
+      4,
+      5,
+      1,
+      6,
+      5,
+      "STRING"
+    ],
+    [
+      5,
+      7,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      6,
+      8,
+      0,
+      6,
+      3,
+      "IMAGE"
+    ],
+    [
+      7,
+      1,
+      0,
+      6,
+      2,
+      "INSIGHTFACEMODEL"
+    ],
+    [
+      8,
+      4,
+      0,
+      6,
+      1,
+      "MODEL"
+    ],
+    [
+      9,
+      6,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      10,
+      10,
+      0,
+      12,
+      0,
+      "STRING"
+    ],
+    [
+      11,
+      11,
+      0,
+      12,
+      1,
+      "STRING"
+    ],
+    [
+      12,
+      12,
+      0,
+      13,
+      0,
+      "STRING"
+    ],
+    [
+      13,
+      13,
+      0,
+      5,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}

@@ -1,0 +1,452 @@
+{
+  "last_node_id": 10,
+  "last_link_id": 11,
+  "nodes": [
+    {
+      "id": 2,
+      "type": "IDControlNetLoader",
+      "pos": [
+        350,
+        530
+      ],
+      "size": [
+        310,
+        60
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "controlnet",
+          "type": "MODEL",
+          "links": [
+            11
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDControlNetLoader"
+      },
+      "widgets_values": [
+        "/content/ComfyUI/models/controlnet"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "InsightFaceLoader",
+      "pos": [
+        680,
+        530
+      ],
+      "size": [
+        370,
+        60
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "INSIGHTFACEMODEL",
+          "type": "INSIGHTFACEMODEL",
+          "links": [
+            7
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "InsightFaceLoader"
+      },
+      "widgets_values": [
+        "CUDA"
+      ]
+    },
+    {
+      "id": 4,
+      "type": "Ipadapter_instantidLoader",
+      "pos": [
+        350,
+        750
+      ],
+      "size": [
+        310,
+        80
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            8
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Ipadapter_instantidLoader"
+      },
+      "widgets_values": [
+        "/content/ComfyUI/models/checkpoints",
+        "ip-adapter.bin"
+      ]
+    },
+    {
+      "id": 7,
+      "type": "LoadImage",
+      "pos": [
+        350,
+        880
+      ],
+      "size": [
+        310,
+        430
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5
+          ],
+          "shape": 3
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "download.jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 9,
+      "type": "PreviewImage",
+      "pos": [
+        680,
+        880
+      ],
+      "size": [
+        720,
+        980
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 8,
+      "type": "LoadImage",
+      "pos": [
+        350,
+        1360
+      ],
+      "size": [
+        310,
+        500
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            6
+          ],
+          "shape": 3
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "u=425589426,3799949985&fm=253&fmt=auto&app=138&f=JPEG.webp",
+        "image"
+      ]
+    },
+    {
+      "id": 10,
+      "type": "IDBaseModelLoader_local",
+      "pos": [
+        350,
+        640
+      ],
+      "size": [
+        310,
+        60
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "controlnet",
+          "type": "MODEL",
+          "link": 11,
+          "slot_index": 0
+        }
+      ],
+      "outputs": [
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "links": [
+            10
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDBaseModelLoader_local"
+      },
+      "widgets_values": [
+        "sd_xl_base_1.0.safetensors"
+      ]
+    },
+    {
+      "id": 5,
+      "type": "ID_Prompt_Styler",
+      "pos": [
+        680,
+        640
+      ],
+      "size": [
+        370,
+        190
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "positive_prompt",
+          "type": "STRING",
+          "links": [
+            3
+          ],
+          "shape": 3,
+          "slot_index": 0
+        },
+        {
+          "name": "negative_prompt",
+          "type": "STRING",
+          "links": [
+            4
+          ],
+          "shape": 3,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ID_Prompt_Styler"
+      },
+      "widgets_values": [
+        "a woman, retro futurism, retro game",
+        "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly",
+        "Film Noir"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "IDGenerationNode",
+      "pos": [
+        1070,
+        530
+      ],
+      "size": [
+        330,
+        300
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "face_image",
+          "type": "IMAGE",
+          "link": 5,
+          "slot_index": 0
+        },
+        {
+          "name": "pipe",
+          "type": "MODEL",
+          "link": 8
+        },
+        {
+          "name": "insightface",
+          "type": "INSIGHTFACEMODEL",
+          "link": 7
+        },
+        {
+          "name": "pose_image_optional",
+          "type": "IMAGE",
+          "link": 6,
+          "slot_index": 3
+        },
+        {
+          "name": "positive",
+          "type": "STRING",
+          "link": 3,
+          "widget": {
+            "name": "positive"
+          }
+        },
+        {
+          "name": "negative",
+          "type": "STRING",
+          "link": 4,
+          "widget": {
+            "name": "negative"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            9
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "IDGenerationNode"
+      },
+      "widgets_values": [
+        "",
+        "",
+        0.8,
+        0.8,
+        50,
+        5,
+        true,
+        210876416756428,
+        "randomize"
+      ]
+    }
+  ],
+  "links": [
+    [
+      3,
+      5,
+      0,
+      6,
+      4,
+      "STRING"
+    ],
+    [
+      4,
+      5,
+      1,
+      6,
+      5,
+      "STRING"
+    ],
+    [
+      5,
+      7,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      6,
+      8,
+      0,
+      6,
+      3,
+      "IMAGE"
+    ],
+    [
+      7,
+      1,
+      0,
+      6,
+      2,
+      "INSIGHTFACEMODEL"
+    ],
+    [
+      8,
+      4,
+      0,
+      6,
+      1,
+      "MODEL"
+    ],
+    [
+      9,
+      6,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      10,
+      10,
+      0,
+      4,
+      0,
+      "MODEL"
+    ],
+    [
+      11,
+      2,
+      0,
+      10,
+      0,
+      "MODEL"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
+}
