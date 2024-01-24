@@ -95,7 +95,10 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 
 - 下载 [DIAMONIK7777/antelopev2](https://huggingface.co/DIAMONIK7777/antelopev2/tree/main) 中的所有模型，将其放入 ComfyUI//custom_nodes/ComfyUI-InstantID/models/antelopev2 中
 
-
+<!---
+- 兼容性： CUDA11 支持默认安装的 onnxruntime-gpu（1.16.0），如果是 CUDA12 则需安装 onnxruntime-gpu==1.17.0 
+--->
+  
 ## 工作流 | Workflows
 
 - [V1.0  InstantID + ArtGallery](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/blob/main/INSTANTID%20WORKFLOWS/V1.0%20InstantID%20%2B%20ArtGallery%E3%80%90Zho%E3%80%91.json)
@@ -103,8 +106,6 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 
   ![Dingtalk_20240123182440](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/c6ee25bf-a528-4d78-9b35-f5b0d0303601)
 
-
-  
 
 - [V1.0 本地模型 locally](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/blob/main/INSTANTID%20WORKFLOWS/V1.0%20InstantID_locally%E3%80%90Zho%E3%80%91.json)
 
@@ -119,6 +120,10 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 
 
 ## 更新日志
+
+- 20240124
+
+  修复 onnxruntime-gpu 版本兼容性的问题
 
 - 20240123
 
@@ -147,3 +152,5 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 ## Credits
 
 [InstantID](https://github.com/InstantID/InstantID)
+
+感谢 [@hidecloud](https://twitter.com/hidecloud) 对 onnxruntime 版本兼容性的测试与反馈！
