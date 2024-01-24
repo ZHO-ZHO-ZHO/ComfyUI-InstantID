@@ -75,7 +75,7 @@
     },
     {
       "id": 1,
-      "type": "InsightFaceLoader",
+      "type": "InsightFaceLoader_Zho",
       "pos": [
         680,
         530
@@ -99,7 +99,7 @@
         }
       ],
       "properties": {
-        "Node name for S&R": "InsightFaceLoader"
+        "Node name for S&R": "InsightFaceLoader_Zho"
       },
       "widgets_values": [
         "CUDA"
