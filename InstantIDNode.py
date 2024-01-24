@@ -62,11 +62,11 @@ class InsightFaceLoader_Node_Zho:
             },
         }
 
-    RETURN_TYPES = ("INSIGHTFACE",)
-    FUNCTION = "load_insight_face"
+    RETURN_TYPES = ("INSIGHTFACEMODEL",)
+    FUNCTION = "load_insight_face_antelopev2"
     CATEGORY = "📷InstantID"
 
-    def load_insight_face(self, provider):
+    def load_insight_face_antelopev2(self, provider):
         model = FaceAnalysis(name="antelopev2", root=current_directory, providers=[provider + 'ExecutionProvider',])
         model.prepare(ctx_id=0, det_size=(640, 640))
 
@@ -227,7 +227,7 @@ class IDGenerationNode_Zho:
             "required": {
                 "face_image": ("IMAGE",),
                 "pipe": ("MODEL",),
-                "insightface": ("INSIGHTFACE",),
+                "insightface": ("INSIGHTFACEMODEL",),
                 "positive": ("STRING", {"multiline": True, "forceInput": True}),
                 "negative": ("STRING", {"multiline": True, "forceInput": True}),
                 "ip_adapter_scale": ("FLOAT", {"default": 0.8, "min": 0, "max": 1.0, "display": "slider"}),
