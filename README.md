@@ -95,9 +95,8 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 
 - 下载 [DIAMONIK7777/antelopev2](https://huggingface.co/DIAMONIK7777/antelopev2/tree/main) 中的所有模型，将其放入 ComfyUI//custom_nodes/ComfyUI-InstantID/models/antelopev2 中
 
-<!---
-- 兼容性： CUDA11 支持默认安装的 onnxruntime-gpu（1.16.0），如果是 CUDA12 则需安装 onnxruntime-gpu==1.17.0 
---->
+- 兼容性： CUDA11 支持默认安装的 onnxruntime-gpu（1.16.0），如果是 CUDA12 则需手动安装 onnxruntime-gpu==1.17.0 [地址](https://dev.azure.com/onnxruntime/onnxruntime/_artifacts/feed/onnxruntime-cuda-12/PyPI/onnxruntime-gpu/overview/1.17.0)
+
   
 ## 工作流 | Workflows
 
@@ -124,8 +123,6 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 - 20240124
 
   修复 insightfaceloader 冲突问题
-
-- 20240124
 
   修复 onnxruntime-gpu 版本兼容性的问题
 
