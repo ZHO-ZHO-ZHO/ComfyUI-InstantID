@@ -123,6 +123,10 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 
 - 20240124
 
+  修复 insightfaceloader 冲突问题
+
+- 20240124
+
   修复 onnxruntime-gpu 版本兼容性的问题
 
 - 20240123
@@ -153,4 +157,8 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 
 [InstantID](https://github.com/InstantID/InstantID)
 
+📷InsightFace Loader 代码修改自 [ComfyUI_IPAdapter_plus](https://github.com/cubiq/ComfyUI_IPAdapter_plus)，感谢 [@cubiq](https://github.com/cubiq)！
+
 感谢 [@hidecloud](https://twitter.com/hidecloud) 对 onnxruntime 版本兼容性的测试与反馈！
+
+感谢 [esheep](https://www.esheep.com/) 技术人员对节点冲突问题的反馈！
