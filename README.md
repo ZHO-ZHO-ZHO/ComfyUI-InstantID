@@ -8,17 +8,30 @@ Unofficial implementation of [InstantID](https://github.com/InstantID/InstantID)
 
 ![Dingtalk_20240123182131](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7a99b32c-b4a2-4c46-acb0-f796fc46f9ee)
 
++ pose_ref
+
+![Dingtalk_20240124232946](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/caa60456-f2d8-4315-864b-659a9e7cea89)
+
 
 ## 项目介绍 | Info
 
 - 来自对[InstantID](https://github.com/InstantID/InstantID)的非官方实现
   
-- 版本：V1.0 同时支持本地、huggingface hub模型，支持通用styler（也与 PhotoMaker Styler 通用）
+- 版本：V2.0 支持姿势参考图
 
+<!---
+  同时支持本地、huggingface hub模型，支持通用styler（也与 PhotoMaker Styler 通用）
+--->
 
 ## 视频演示
 
+V2.0
 
+
+https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/083c9e5e-06a0-4623-b5ac-05f7e85a74f2
+
+
+V1.0
 
 https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-4044-aea3-8efa67047362
 
@@ -54,16 +67,17 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
         - Snow
         - Line art
 
-- InstantID 生成 | 📷InstantID Generation
-    - face_image：接入预处理图像
+- InstantID 生成 | 📷InstantID Generation 🆕
+    - face_image：接入脸部参考图像
     - pipe：接入模型
-    - insightface：接入 insightface 模型
+    - insightface：接入 insightface 模型 🆕
+    - pose_image_optional（非必要）：接入姿势参考图像（注意：仅对面部周围姿势起效，与通常的 openpose 不同）
     - positivet、negative：正负提示词
     - ip_adapter_scale：IPA 强度
     - controlnet_conditioning_scale：ID Controlnet 强度
     - step：步数，官方默认30步
     - guidance_scale：提示词相关度，一般默认为5
-    - width、height：尺寸设置（需1024维度）
+    - enhance_face_region：脸部增强选项 🆕
     - seed：种子
 
 
@@ -100,6 +114,25 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
   
 ## 工作流 | Workflows
 
+V2.0
+
+- [V2.0 InstantID_pose_ref + ArtGallery](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/blob/main/INSTANTID%20WORKFLOWS/V2.0%20InstantID_pose_ref%20%2B%20ArtGallery%20%E3%80%90Zho%E3%80%91.json)
+
+  ![Dingtalk_20240124232833](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/99be9592-775d-4c33-bafc-5bd5c95a7222)
+
+
+- [V2.0 自动下载 huggingface hub](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/blob/main/INSTANTID%20WORKFLOWS/V2.0%20InstantID_fromhub_pose_ref%E3%80%90Zho%E3%80%91.json)
+
+  ![Dingtalk_20240124230145](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/95c4a1dd-864d-4a46-8c45-a48866aef29f)
+
+
+- [V2.0 InstantID_locally_pose_ref](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/blob/main/INSTANTID%20WORKFLOWS/V2.0%20InstantID_locally_pose_ref%E3%80%90Zho%E3%80%91.json)
+
+  ![Dingtalk_20240124230609](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/d4c22389-f853-44bd-9ea2-568b2ac7ed06)
+
+
+V1.0 工作流仅适用于V1.0 版本
+
 - [V1.0  InstantID + ArtGallery](https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/blob/main/INSTANTID%20WORKFLOWS/V1.0%20InstantID%20%2B%20ArtGallery%E3%80%90Zho%E3%80%91.json)
 
 
@@ -121,6 +154,8 @@ https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID/assets/140084057/7295c0d7-1d1b-
 ## 更新日志
 
 - 20240124
+
+  更新为 V2.0 ：新增姿势参考图、优化代码
 
   修复 insightfaceloader 冲突问题
 
