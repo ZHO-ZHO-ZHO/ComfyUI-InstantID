@@ -332,7 +332,7 @@ class IDGenerationNode_Zho:
 
 
 NODE_CLASS_MAPPINGS = {
-    "InsightFaceLoader": InsightFaceLoader_Node_Zho,
+    "InsightFaceLoader_Zho": InsightFaceLoader_Node_Zho,
     "IDControlNetLoader": IDControlNetLoaderNode_Zho,
     "IDBaseModelLoader_fromhub": IDBaseModelLoader_fromhub_Node_Zho,
     "IDBaseModelLoader_local": IDBaseModelLoader_local_Node_Zho,
@@ -342,7 +342,7 @@ NODE_CLASS_MAPPINGS = {
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "InsightFaceLoader": "📷InsightFace Loader",
+    "InsightFaceLoader_Zho": "📷InsightFace Loader",
     "IDControlNetLoader": "📷ID ControlNet Loader",
     "IDBaseModelLoader_fromhub": "📷ID Base Model Loader from hub 🤗",
     "IDBaseModelLoader_local": "📷ID Base Model Loader locally",
