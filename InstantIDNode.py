@@ -67,6 +67,7 @@ class InsightFaceLoader_Node_Zho:
     CATEGORY = "📷InstantID"
 
     def load_insight_face_antelopev2(self, provider):
+            
         model = FaceAnalysis(name="antelopev2", root=current_directory, providers=[provider + 'ExecutionProvider',])
         model.prepare(ctx_id=0, det_size=(640, 640))
 
