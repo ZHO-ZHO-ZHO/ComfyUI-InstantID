@@ -201,18 +201,18 @@ class ID_Prompt_Style_Zho:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "prompt": ("STRING", {"default": "analog film photo of a woman. faded film, desaturated, 35mm photo, grainy, vignette, vintage, Kodachrome, Lomography, stained, highly detailed, found footage, masterpiece, best quality", "multiline": True}),
-                "negative_prompt": ("STRING", {"default": "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly, disfigured (lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch,deformed, mutated, cross-eyed, ugly, disfigured", "multiline": True}),
+                "prompt": ("STRING", {"default": "a woman, retro futurism, retro game", "multiline": True}),
+                "negative_prompt": ("STRING", {"default": "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, painting, drawing, illustration, glitch, deformed, mutated, cross-eyed, ugly", "multiline": True}),
                 "style_name": (STYLE_NAMES, {"default": DEFAULT_STYLE_NAME})
             }
         }
 
     RETURN_TYPES = ('STRING','STRING',)
     RETURN_NAMES = ('positive_prompt','negative_prompt',)
-    FUNCTION = "prompt_style"
+    FUNCTION = "id_prompt_style"
     CATEGORY = "📷InstantID"
 
-    def prompt_style(self, style_name, prompt, negative_prompt):
+    def id_prompt_style(self, style_name, prompt, negative_prompt):
         prompt, negative_prompt = apply_style(style_name, prompt, negative_prompt)
         
         return prompt, negative_prompt
@@ -235,17 +235,19 @@ class IDGenerationNode_Zho:
                 "controlnet_conditioning_scale": ("FLOAT", {"default": 0.8, "min": 0, "max": 1.0, "display": "slider"}),
                 "steps": ("INT", {"default": 50, "min": 1, "max": 100, "step": 1, "display": "slider"}),
                 "guidance_scale": ("FLOAT", {"default": 5, "min": 0, "max": 10, "display": "slider"}),
-                "width": ("INT", {"default": 1024, "min": 512, "max": 2048, "step": 32, "display": "slider"}),
-                "height": ("INT", {"default": 1024, "min": 512, "max": 2048, "step": 32, "display": "slider"}), 
+                "enhance_face_region": ("BOOLEAN", {"default": True}),
                 "seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff}),
+            },
+            "optional": {
+                "pose_image_optional": ("IMAGE",), 
             }
         }
 
     RETURN_TYPES = ("IMAGE",)
-    FUNCTION = "generate_image"
+    FUNCTION = "id_generate_image"
     CATEGORY = "📷InstantID"
                        
-    def generate_image(self, insightface, positive, negative, face_image, pipe, ip_adapter_scale, controlnet_conditioning_scale, steps, guidance_scale, width, height, seed):
+    def id_generate_image(self, insightface, positive, negative, face_image, pipe, ip_adapter_scale, controlnet_conditioning_scale, steps, guidance_scale, seed, enhance_face_region, pose_image_optional=None):
 
         face_image = resize_img(face_image)
         
@@ -257,7 +259,28 @@ class IDGenerationNode_Zho:
         face_info = sorted(face_info, key=lambda x: (x['bbox'][2] - x['bbox'][0]) * (x['bbox'][3] - x['bbox'][1]))[-1]
         face_emb = face_info['embedding']
         face_kps = draw_kps(face_image, face_info['kps'])
+        width, height = face_kps.size
 
+        if pose_image_optional is not None:
+            pose_image = resize_img(pose_image_optional)
+            face_info = insightface.get(cv2.cvtColor(np.array(pose_image), cv2.COLOR_RGB2BGR))
+            if len(face_info) == 0:
+                raise gr.Error(f"Cannot find any face in the reference image! Please upload another person image")
+        
+            face_info = face_info[-1]
+            face_kps = draw_kps(pose_image, face_info['kps'])
+        
+            width, height = face_kps.size
+
+        if enhance_face_region:
+            control_mask = np.zeros([height, width, 3])
+            x1, y1, x2, y2 = face_info['bbox']
+            x1, y1, x2, y2 = int(x1), int(y1), int(x2), int(y2)
+            control_mask[y1:y2, x1:x2] = 255
+            control_mask = Image.fromarray(control_mask.astype(np.uint8))
+        else:
+            control_mask = None
+            
         generator = torch.Generator(device=device).manual_seed(seed)
 
         pipe.set_ip_adapter_scale(ip_adapter_scale)
@@ -267,6 +290,7 @@ class IDGenerationNode_Zho:
             negative_prompt=negative,
             image_embeds=face_emb,
             image=face_kps,
+            control_mask=control_mask,
             controlnet_conditioning_scale=controlnet_conditioning_scale,
             num_inference_steps=steps,
             generator=generator,
