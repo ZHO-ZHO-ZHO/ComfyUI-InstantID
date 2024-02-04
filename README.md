@@ -182,7 +182,7 @@ V1.0 工作流仅适用于V1.0 版本
 
 ## Stars 
 
-[![Star History Chart](https://api.star-history.com/svg?repos=ZHO-ZHO-ZHO/ComfyUI-InstantID&type=Date)](https://star-history.com/#ZHO-ZHO-ZHO/ComfyUI-PhotoMaker&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=ZHO-ZHO-ZHO/ComfyUI-InstantID&type=Date)](https://star-history.com/#ZHO-ZHO-ZHO/ComfyUI-InstantID&Date)
 
 
 ## Credits
