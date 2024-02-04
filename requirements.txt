@@ -2,5 +2,5 @@ opencv-python
 transformers 
 accelerate 
 insightface
-diffusers
+diffusers>=0.22.0
 onnxruntime-gpu
