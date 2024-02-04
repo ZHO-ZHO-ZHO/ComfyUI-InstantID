@@ -44,6 +44,11 @@ from .ip_adapter.utils import is_torch2_available
 
 from .ip_adapter.attention_processor import AttnProcessor, IPAttnProcessor
 
+if is_torch2_available():
+    from .ip_adapter.attention_processor import IPAttnProcessor2_0 as IPAttnProcessor, AttnProcessor2_0 as AttnProcessor
+else:
+    from .ip_adapter.attention_processor import IPAttnProcessor, AttnProcessor
+
 logger = logging.get_logger(__name__)  # pylint: disable=invalid-name
 
 
@@ -132,13 +137,14 @@ def draw_kps(image_pil, kps, color_list=[(255,0,0), (0,255,0), (0,0,255), (255,2
     
 class StableDiffusionXLInstantIDPipeline(StableDiffusionXLControlNetPipeline):
     
-    def cuda(self, dtype=torch.float16, use_xformers=False):
+    def cuda(self, dtype=torch.float16, use_xformers=True):
         self.to('cuda', dtype)
         
         if hasattr(self, 'image_proj_model'):
             self.image_proj_model.to(self.unet.device).to(self.unet.dtype)
         
         if use_xformers:
+#        if True:
             if is_xformers_available():
                 import xformers
                 from packaging import version
@@ -232,6 +238,20 @@ class StableDiffusionXLInstantIDPipeline(StableDiffusionXLControlNetPipeline):
         prompt_image_emb = self.image_proj_model(prompt_image_emb)
         return prompt_image_emb
 
+    def free_model_hooks(self):
+        r"""
+        Function that offloads all components, removes all model hooks that were added when using
+        `enable_model_cpu_offload` and then DOESN'T applies them again.
+        """
+        if not hasattr(self, "_all_hooks") or len(self._all_hooks) == 0:
+            # `enable_model_cpu_offload` has not be called, so silently do nothing
+            return
+
+        for hook in self._all_hooks:
+            # offload model and remove hook from model
+            hook.offload()
+            hook.remove()
+
     @torch.no_grad()
     @replace_example_docstring(EXAMPLE_DOC_STRING)
     def __call__(
@@ -255,6 +275,7 @@ class StableDiffusionXLInstantIDPipeline(StableDiffusionXLControlNetPipeline):
         negative_pooled_prompt_embeds: Optional[torch.FloatTensor] = None,
         image_embeds: Optional[torch.FloatTensor] = None,
         output_type: Optional[str] = "pil",
+        vram_optimisation: bool = True,
         return_dict: bool = True,
         cross_attention_kwargs: Optional[Dict[str, Any]] = None,
         controlnet_conditioning_scale: Union[float, List[float]] = 1.0,
@@ -457,6 +478,17 @@ class StableDiffusionXLInstantIDPipeline(StableDiffusionXLControlNetPipeline):
         self._clip_skip = clip_skip
         self._cross_attention_kwargs = cross_attention_kwargs
 
+        # Level 1 VRAM optimisation
+        self.free_model_hooks()
+        # Move one model at once to the CPU - faster but needs more VRAM
+        if vram_optimisation == 'level_1':
+            self.enable_model_cpu_offload()
+
+        # Level 2 VRAM optimisation
+        # Slower but need minimal VRAM
+        if vram_optimisation == 'level_2' and self.device != torch.device("meta"):
+            self.enable_sequential_cpu_offload()
+        
         # 2. Define call parameters
         if prompt is not None and isinstance(prompt, str):
             batch_size = 1
@@ -745,7 +777,8 @@ class StableDiffusionXLInstantIDPipeline(StableDiffusionXLControlNetPipeline):
             image = self.image_processor.postprocess(image, output_type=output_type)
 
         # Offload all models
-        self.maybe_free_model_hooks()
+        # self.maybe_free_model_hooks()
+        self.free_model_hooks()
 
         if not return_dict:
             return (image,)
