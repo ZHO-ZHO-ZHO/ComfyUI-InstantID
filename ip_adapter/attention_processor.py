@@ -29,7 +29,7 @@ class AttnProcessor(nn.Module):
     ):
         super().__init__()
 
-    def __call__(
+    def forward(
         self,
         attn,
         hidden_states,
@@ -115,7 +115,7 @@ class IPAttnProcessor(nn.Module):
         self.to_k_ip = nn.Linear(cross_attention_dim or hidden_size, hidden_size, bias=False)
         self.to_v_ip = nn.Linear(cross_attention_dim or hidden_size, hidden_size, bias=False)
 
-    def __call__(
+    def forward(
         self,
         attn,
         hidden_states,
@@ -233,7 +233,7 @@ class AttnProcessor2_0(torch.nn.Module):
         if not hasattr(F, "scaled_dot_product_attention"):
             raise ImportError("AttnProcessor2_0 requires PyTorch 2.0, to use it, please upgrade PyTorch to 2.0.")
 
-    def __call__(
+    def forward(
         self,
         attn,
         hidden_states,
