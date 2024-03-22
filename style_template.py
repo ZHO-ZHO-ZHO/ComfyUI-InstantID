@@ -5,6 +5,11 @@ style_list = [
         "negative_prompt": "",
     },
     {
+        "name": "Spring Festival",
+        "prompt": "Flat illustration, a Chinese {prompt}, ancient style, wearing a red cloth, smile face, white skin, clean background, fireworks blooming, red lanterns",
+        "negative_prompt": "photo, deformed, black and white, realism, disfigured, low contrast, realistic, cropped, worst quality, missing fingers, extra digit, jpeg artifacts, signature, multiple, (lowres, low quality, worst quality:1.2)",
+    },
+    {
         "name": "Watercolor",
         "prompt": "watercolor painting, {prompt}. vibrant, beautiful, painterly, detailed, textural, artistic",
         "negative_prompt": "(lowres, low quality, worst quality:1.2), (text:1.2), watermark, anime, photorealistic, 35mm film, deformed, glitch, low contrast, noisy",
