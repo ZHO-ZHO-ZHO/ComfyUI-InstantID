@@ -228,7 +228,7 @@ class IDGenerationNode_Zho:
             "required": {
                 "face_image": ("IMAGE",),
                 "pipe": ("MODEL",),
-                "insightface": ("INSIGHTFACEMODEL",),
+                "insightface": ("INSIGHTFACE",),
                 "positive": ("STRING", {"multiline": True, "forceInput": True}),
                 "negative": ("STRING", {"multiline": True, "forceInput": True}),
                 "ip_adapter_scale": ("FLOAT", {"default": 0.8, "min": 0, "max": 1.0, "display": "slider"}),
