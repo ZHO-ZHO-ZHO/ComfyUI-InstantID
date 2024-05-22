@@ -1,0 +1,15 @@
+[project]
+name = "comfyui-instantid"
+description = "Unofficial implementation of [a/InstantID](https://github.com/InstantID/InstantID) for ComfyUI"
+version = "1.0.0"
+license = "LICENSE"
+dependencies = ["opencv-python", "transformers", "accelerate", "insightface", "diffusers", "onnxruntime-gpu"]
+
+[project.urls]
+Repository = "https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = ""
+DisplayName = "ComfyUI-InstantID"
+Icon = ""
